@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
+import Wordle from "./components/Wordle";
 
 function App() {
   const [solution, setSolution] = useState(null)
 
   useEffect(() => {
     // fetching a random word from the random-word-api
-    /*  fetch('https://random-word-api.herokuapp.com/word?length=5')
-       .then(res => res.json())
-       .then(json => {
-         setSolution(json[0]);
-       }) */
+    fetch('https://random-word-api.herokuapp.com/word?length=5')
+      .then(res => res.json())
+      .then(json => {
+        setSolution(json[0]);
+      })
 
     // fetching a random word from our own api
-    fetch('http://localhost:3001/solutions')
+    /* fetch('http://localhost:3001/solutions')
       .then(res => res.json())
       .then(json => {
         // random int between 0 and 14
         const randomSolution = json[Math.floor(Math.random() * json.length)]
         setSolution(randomSolution.word);
-      })
+      }) */
   }, [setSolution])
 
   return (
     <div className="App">
-      <h1>Wordle</h1>
-      {solution && <div>Solution is: {solution}</div>}
+      <h1>Wordle Clone</h1>
+      {solution && <Wordle solution={solution} />}
     </div>
   );
 }
