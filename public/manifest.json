@@ -1,14 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Wordle Clone",
+  "name": "Wordle Clone",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "wordle-favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "wordle-apple-touch-icon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
