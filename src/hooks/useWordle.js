@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState } from 'react';
 
 const useWordle = (solution) => {
     const [turn, setTurn] = useState(0);
@@ -7,6 +7,8 @@ const useWordle = (solution) => {
     const [history, setHistory] = useState([]); // each history item is an array of letter objects
     const [isCorrect, setIsCorrect] = useState(false);
     const [usedKeys, setUsedKeys] = useState({}); // each key is a letter, each value is a boolean
+    // 
+
     //const [dictionary, setDictionary] = useState([]);
 
     //fetch dictionary from https://api.dictionaryapi.dev/api/v2/entries/en/ + currentGuess  if currentGuess.length === 5  and currentGuess !== ''
@@ -94,6 +96,51 @@ const useWordle = (solution) => {
         setCurrentGuess(''); // reset the current guess
     }
 
+    // click on a letter to add it to the current guess
+    const handleClick = (letter) => {
+        if (turn > solution.length) {
+            console.log('you used all your turns');
+            return;
+        }
+        if (currentGuess.length === solution.length) {
+            console.log('guess must be 5 letters long');
+            return;
+        }
+        setCurrentGuess((prev) => {
+            return prev + letter;
+        })
+    }
+
+    //if user click on button, add the new guess
+    const handleClickButton = () => {
+        if (turn > solution.length) {
+            console.log('you used all your turns');
+            return;
+        }
+        if (currentGuess.length !== solution.length) {
+            console.log('guess must be 5 letters long');
+            return;
+        }
+        if (history.includes(currentGuess)) {
+            console.log('you already guessed that');
+            return;
+        }
+        // if (!dictionary) {
+        //     console.log('not a valid word: ', dictionary);
+        //     //alert('not a valid word');
+        //     return;
+        // }
+        const formatted = formatGuess();
+        addNewGuess(formatted);
+    }
+
+    // if user click on button delete the last letter
+    const handleClickDelete = () => {
+        setCurrentGuess((prev) => {
+            return prev.slice(0, -1);
+        })
+    }
+
     // handle keyup event and track current guess
     // if user presses enter, add the new guess
     const handleKeyUp = ({ key }) => {
@@ -121,10 +168,10 @@ const useWordle = (solution) => {
             //     //alert('not a valid word');
             //     return;
             // }
-
             const formatted = formatGuess();
             addNewGuess(formatted);
         }
+
         if (key === 'Backspace') {
             setCurrentGuess((prev) => {
                 return prev.slice(0, -1);
@@ -142,7 +189,7 @@ const useWordle = (solution) => {
         }
     }
 
-    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyUp }
+    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyUp, handleClick, handleClickButton, handleClickDelete }
 
 }
 

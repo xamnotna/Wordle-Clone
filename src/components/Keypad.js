@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react';
 
 
 
-export default function Keypad({ usedKeys }) {
+export default function Keypad({ usedKeys, handleClick, handleClickButton, handleClickDelete }) {
     const [letters, setLetters] = useState(null);
+    const [enter, setEnter] = useState(null);
+    const [del, setDelete] = useState(null);
+
 
     // useEffect(() => {
     //     fetch('http://localhost:3001/letters')
@@ -47,12 +50,65 @@ export default function Keypad({ usedKeys }) {
         setLetters(letters);
     }, []);
 
+    //update andguess word when clicking on keypad button
+
+
+
+    // add array of enter to state
+
+    useEffect(() => {
+        const enter = [
+            { 'key': 'Enter' }
+        ];
+        setEnter(enter);
+    }, []);
+
+    // add array of delete to state
+    useEffect(() => {
+        const del = [
+            { 'key': 'Delete' }
+        ];
+        setDelete(del);
+    }, []);
+
     return (
-        <div className='keypad'>
-            {letters && letters.map((letter) => {
+        <div className="keypad">
+            {letters && letters.map((letter, index) => {
                 const color = usedKeys[letter.key];
                 return (
-                    <div key={letter.key} className={color}>{letter.key}</div>
+                    <div
+                        key={index}
+                        className={color}
+                        onClick={() => handleClick(letter.key)}
+                    >
+                        {letter.key}
+                    </div>
+                )
+            })}
+            {enter && enter.map((enter, index) => {
+                return (
+                    <div
+                        key={index}
+                        className="enter"
+                        onClick={() => handleClickButton(enter.key)}
+                    >
+                        {enter.key}
+                    </div>
+                )
+            })}
+            {del && del.map((del, index) => {
+                return (
+                    <div
+                        key={index}
+                        className="key"
+                        onClick={() => handleClickDelete(del.key)}
+                    >
+                        ⌫
+
+
+
+                    </div>
+
                 )
             })}
         </div>

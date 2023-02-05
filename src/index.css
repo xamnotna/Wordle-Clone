@@ -115,6 +115,10 @@ h1 {
   transition: all 0.3s ease-in;
 }
 
+.keypad>div.enter {
+  width: 60px;
+}
+
 .modal {
   background: rgba(255, 255, 255, 0.7);
   position: fixed;
